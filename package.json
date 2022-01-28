@@ -1,0 +1,12 @@
+{
+  "name": "weixin-robot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:su37josephxia/weixin-robot.git",
+  "author": "josephxia <15906475@qq.com>",
+  "license": "MIT",
+  "dependencies": {
+    "inquirer": "^8.2.0",
+    "robotjs": "^0.6.0"
+  }
+}
