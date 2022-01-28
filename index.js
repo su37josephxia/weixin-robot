@@ -8,13 +8,15 @@ const { send } = require("./src/wechat");
 app.use(async (ctx, next) => {
   const { url } = ctx;
   console.log("url:" + url);
-  next();
+  await next();
 });
 app.use(async (ctx) => {
+  if(ctx.url !== '/send') return
   console.log("body", ctx.request.body);
   const body = ctx.request.body;
   const payload = { id: body[0], msg: body[1] };
-  send(payload);
+  await send(payload);
+  console.log('虚拟操作完成 ok')
   ctx.body = { ok: 1 };
 });
 

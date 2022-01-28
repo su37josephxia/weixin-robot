@@ -20,6 +20,8 @@ exports.send = async ({ id, msg }) => {
   await sendMsg(msg);
 };
 
+
+
 /**
  * 选中第一个用户
  */
@@ -50,7 +52,10 @@ async function tab() {
   // robot.moveMouse(220, 110);
   // await delay(100);
   // robot.mouseClick();
-  await selectFirstUser();
+  // await selectFirstUser();
+  robot.moveMouse(33, 65);
+  await delay(100);
+  robot.mouseClick();
 }
 
 /**
@@ -59,9 +64,6 @@ async function tab() {
  */
 async function search(text) {
   console.log("搜索:" + text);
-  // robot.keyTap("f", "command");
-  // robot.typeString(text);
-  // robot.mouseClick();
 
   robot.keyTap("f", "command");
   // robot.typeString("QF881112");
@@ -70,7 +72,7 @@ async function search(text) {
     await delay(10);
     robot.keyTap(v);
   }
-  await delay(2000);
+  await delay(1000);
   robot.keyTap('enter')
   await selectFirstUser();
 }
