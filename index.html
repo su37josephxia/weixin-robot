@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./node_modules/handsontable/dist/handsontable.full.min.js"></script>
+    <script src="./node_modules/axios/dist/axios.min.js"></script>
+    <!-- <script src="./node_modules/petite-vue/dist/petite-vue.umd.js"></script> -->
+    <script src="https://unpkg.com/petite-vue" defer init></script>
+
+    <link
+      rel="stylesheet"
+      href="./node_modules/handsontable/dist/handsontable.full.min.css"
+    />
+  </head>
+  <body>
+    <div v-scope="{ loading: '' }">
+      {{ loading }}
+      <button @click="send(loading)">发送</button>
+    </div>
+    <div id="c1" width="80%"></div>
+    <script>
+      const data = [["备注", "发送内容", "状态"]];
+      // data.push(["qq88801", "1", ""]);
+      // data.push(["qq88802", "2", ""]);
+      for (var i = 0; i < 1000; i++) {
+        data.push(["", "", ""]);
+      }
+
+      const container = document.getElementById("c1");
+      const hot = new Handsontable(container, {
+        data,
+        rowHeaders: true,
+        colHeaders: true,
+        rowHeights: 23,
+        colWidths: 100,
+        licenseKey: "non-commercial-and-evaluation",
+      });
+
+      async function send(loading) {
+        console.log(loading);
+        loading = "处理中...";
+        var data = hot.getData();
+        // 忽略首行
+        for (var i = 1; i < data.length; i++) {
+          const row = data[i];
+          if (row[0] !== "" && row[0] !== null) {
+            console.log("row");
+            const res = await axios.post("/send", row);
+            console.log("完成");
+            row[2] = "✅";
+            // hot.loadData(data);
+          }
+          await delay(3000);
+        }
+        loading = "完成";
+        console.log(this.loading);
+      }
+      function delay(time) {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve();
+          }, time);
+        });
+      }
+    </script>
+  </body>
+</html>
